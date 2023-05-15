@@ -1,5 +1,5 @@
 import Image from "next/image";
-import urlFor from "@libs/sanity.image";
+import urlFor from "libs/sanity.image";
 
 interface Props {
     source: any;
