@@ -44,7 +44,7 @@ const postFields = groq`
 `;
 
 export const indexQuery = groq`
-	*[_type == "post" && !(_id in path("drafts.**")) && hidden == false] | order(date asc) {
+	*[_type == "post" && !(_id in path("drafts.**")) && hidden == false] | order(date desc) {
 		${postFields}
 	}
 `;

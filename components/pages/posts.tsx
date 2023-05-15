@@ -23,7 +23,7 @@ export default function Posts({
 }: Props) {
     const [search, setSearch] = useState<string>("");
 
-    const posts = initialPosts.reverse().filter((post) =>
+    const posts = initialPosts.filter((post) =>
         post.tags
             ?.map(({ title }) => title)
             .concat(post.title)

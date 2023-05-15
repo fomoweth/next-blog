@@ -132,7 +132,6 @@ export default function Home({
 
                             <div className="md:border-l md:border-zinc-200 md:pl-6 md:dark:border-zinc-700">
                                 {posts
-                                    .reverse()
                                     .slice(0, settings.postsOffset)
                                     .map((post, idx) => (
                                         <article
