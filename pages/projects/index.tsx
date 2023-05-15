@@ -1,19 +1,12 @@
 import { lazy } from "react";
 import { GetStaticProps } from "next";
 import { PreviewSuspense } from "@sanity/preview-kit";
-import {
-    fetchAuthor,
-    fetchPosts,
-    fetchProjects,
-    fetchSettings,
-} from "libs/sanity.queries";
-import View from "components/pages/home";
+import { fetchProjects, fetchSettings } from "libs/sanity.queries";
+import View from "components/pages/projects";
 
-const Preview = lazy(() => import("components/previews/home"));
+const Preview = lazy(() => import("components/previews/posts"));
 
 interface Props {
-    author: Author;
-    posts: Post[];
     preview: boolean;
     projects: Project[];
     settings: Settings;
@@ -28,24 +21,15 @@ interface PreviewData {
     token?: string;
 }
 
-export default function Page({
-    author,
-    preview,
-    posts,
-    projects,
-    settings,
-    token,
-}: Props) {
+export default function Page({ preview, projects, settings, token }: Props) {
     if (preview) {
         return (
             <PreviewSuspense
                 fallback={
                     <View
-                        author={author}
                         loading
-                        posts={posts}
-                        preview
                         projects={projects}
+                        preview
                         settings={settings}
                     />
                 }
@@ -55,14 +39,7 @@ export default function Page({
         );
     }
 
-    return (
-        <View
-            author={author}
-            posts={posts}
-            projects={projects}
-            settings={settings}
-        />
-    );
+    return <View projects={projects} settings={settings} />;
 }
 
 export const getStaticProps: GetStaticProps<Props, Query, PreviewData> = async (
@@ -70,17 +47,13 @@ export const getStaticProps: GetStaticProps<Props, Query, PreviewData> = async (
 ) => {
     const { preview = false, previewData = {} } = ctx;
 
-    const [settings, author, posts = [], projects = []] = await Promise.all([
+    const [settings, projects = []] = await Promise.all([
         fetchSettings(),
-        fetchAuthor(),
-        fetchPosts(),
         fetchProjects(),
     ]);
 
     return {
         props: {
-            author,
-            posts,
             preview,
             projects,
             settings,

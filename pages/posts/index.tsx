@@ -1,21 +1,14 @@
 import { lazy } from "react";
 import { GetStaticProps } from "next";
 import { PreviewSuspense } from "@sanity/preview-kit";
-import {
-    fetchAuthor,
-    fetchPosts,
-    fetchProjects,
-    fetchSettings,
-} from "libs/sanity.queries";
-import View from "components/pages/home";
+import { fetchPosts, fetchSettings } from "libs/sanity.queries";
+import View from "components/pages/posts";
 
-const Preview = lazy(() => import("components/previews/home"));
+const Preview = lazy(() => import("components/previews/posts"));
 
 interface Props {
-    author: Author;
     posts: Post[];
     preview: boolean;
-    projects: Project[];
     settings: Settings;
     token: string | null;
 }
@@ -28,25 +21,17 @@ interface PreviewData {
     token?: string;
 }
 
-export default function Page({
-    author,
-    preview,
-    posts,
-    projects,
-    settings,
-    token,
-}: Props) {
+export default function Page({ preview, posts, settings, token }: Props) {
     if (preview) {
         return (
             <PreviewSuspense
                 fallback={
                     <View
-                        author={author}
                         loading
-                        posts={posts}
                         preview
-                        projects={projects}
+                        posts={posts}
                         settings={settings}
+                        title="Posts"
                     />
                 }
             >
@@ -55,14 +40,7 @@ export default function Page({
         );
     }
 
-    return (
-        <View
-            author={author}
-            posts={posts}
-            projects={projects}
-            settings={settings}
-        />
-    );
+    return <View posts={posts} settings={settings} title="Posts" />;
 }
 
 export const getStaticProps: GetStaticProps<Props, Query, PreviewData> = async (
@@ -70,19 +48,15 @@ export const getStaticProps: GetStaticProps<Props, Query, PreviewData> = async (
 ) => {
     const { preview = false, previewData = {} } = ctx;
 
-    const [settings, author, posts = [], projects = []] = await Promise.all([
+    const [settings, posts = []] = await Promise.all([
         fetchSettings(),
-        fetchAuthor(),
         fetchPosts(),
-        fetchProjects(),
     ]);
 
     return {
         props: {
-            author,
             posts,
             preview,
-            projects,
             settings,
             token: previewData.token ?? null,
         },
