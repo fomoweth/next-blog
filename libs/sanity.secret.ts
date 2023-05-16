@@ -1,7 +1,7 @@
-import { previewSecretId } from "env";
-
 const query = (ttl: number) =>
     `*[_id == $id && dateTime(_updatedAt) > dateTime(now()) - ${ttl}][0].secret`;
+
+const tag = "preview.secret";
 
 export default async function getSecret(
     client: import("next-sanity").SanityClient | import("sanity").SanityClient,
@@ -26,7 +26,7 @@ export default async function getSecret(
                 .transaction()
                 .createIfNotExists({ _id: id, _type: id })
                 .patch(patch)
-                .commit({ tag: previewSecretId });
+                .commit({ tag });
 
             return newSecret;
         } catch (e) {

@@ -25,6 +25,6 @@ export const previewDocumentNode = ({
             ]);
         }
 
-        return null;
+        return S.document().views([S.view.form()]);
     };
 };

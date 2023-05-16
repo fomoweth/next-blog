@@ -34,7 +34,7 @@ export const previewSecretIdRequired = assertEnvConfig(
     process.env.NEXT_PUBLIC_SANITY_PREVIEW_SECRET_ID_REQUIRED
 );
 
-export const useCdn = false;
+export const useCdn = true;
 
 function assertEnvConfig<T>(key: string, value?: T): T {
     if (!value) {
