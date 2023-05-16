@@ -7,6 +7,8 @@ import View from "components/pages/post";
 
 const Preview = lazy(() => import("components/previews/post"));
 
+export const revalidate = 60;
+
 interface Props {
     post: Post;
     prev?: Post;
