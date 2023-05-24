@@ -2,7 +2,6 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import { fetchSettings, fetchTags } from "libs/sanity.queries";
 import Layout from "components/layout";
-import Tag from "components/tags";
 
 interface Props {
     settings: Settings;

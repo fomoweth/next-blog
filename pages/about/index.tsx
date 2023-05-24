@@ -1,25 +1,12 @@
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useState } from "react";
-import { toPlainText } from "@portabletext/react";
 import { fetchAuthor, fetchProjects, fetchSettings } from "libs/sanity.queries";
-import { buildClass, duplicateObj, formatDate, formatUrl } from "libs/utils";
+import { buildClass, formatDate } from "libs/utils";
 import Button from "components/button";
-import {
-    ArrowDown,
-    ArrowUp,
-    CV,
-    Email,
-    ExternalLink,
-    Github,
-    LinkedIn,
-    Location,
-    Twitter,
-    Web,
-} from "components/icons";
+import { Email, Github, LinkedIn, Twitter } from "components/icons";
 import Layout from "components/layout";
 import Resume from "components/resume";
-import SvgIcon, { defineProps } from "components/icon";
 
 interface Props {
     author: Author;
@@ -37,12 +24,6 @@ interface PreviewData {
     token?: string;
 }
 
-const formatDates = (startDate: string, endDate?: string): string => {
-    return `${formatDate(startDate, "short")} - ${
-        endDate ? formatDate(endDate, "short") : "Present"
-    }`;
-};
-
 const getYears = (date: string): number => {
     return new Date().getFullYear() - new Date(date).getFullYear();
 };
@@ -54,26 +35,15 @@ const isUrl = (value: string | undefined): boolean => {
 };
 
 export default function Page({ author, preview, projects, settings }: Props) {
-    const [expanded, setExpanded] = useState<boolean>(false);
     const [toggle, setToggle] = useState<boolean>(false);
 
-    const { experience, location } = author;
     const {
-        iconLinks: { blog, email, github, linkedin, twitter },
+        iconLinks: { email, github, linkedin, twitter },
     } = settings;
 
-    const cls = buildClass(
-        "fill-primary-black dark:fill-white"
-        // "transition-transform duration-200 ease-out hover:scale-125"
-    );
+    const cls = buildClass("fill-primary-black dark:fill-white");
 
     const icons = [
-        {
-            name: "location",
-            text: location,
-            icon: <Location cls={cls} />,
-        },
-        { name: "cv", text: "Resume", icon: <CV cls={cls} /> },
         { name: "email", text: "Email", url: email, icon: <Email cls={cls} /> },
         {
             name: "linkedin",
@@ -109,7 +79,8 @@ export default function Page({ author, preview, projects, settings }: Props) {
                     href={url}
                     target="_blank"
                 >
-                    {children}
+                    {icon}
+                    <span className="text-base">{text}</span>
                 </Link>
             );
         } else if (name === "cv") {
@@ -185,100 +156,6 @@ export default function Page({ author, preview, projects, settings }: Props) {
                             </div>
                         </div>
                     </section>
-
-                    <div className="mb-12 flex flex-col">
-                        <h3 className="m-5 mb-0 text-2xl font-normal md:text-start md:text-3xl">
-                            Professional Experience
-                        </h3>
-
-                        <hr className="my-6 border-zinc-200 dark:border-zinc-700" />
-
-                        <div className="m-10 mt-6 flex">
-                            <div className="flex flex-col items-center">
-                                <ol className="relative border-l border-gray-200 py-4 dark:border-gray-700">
-                                    {experience.map(
-                                        (
-                                            {
-                                                company,
-                                                role,
-                                                description,
-                                                link,
-                                                startDate,
-                                                endDate,
-                                            },
-                                            idx
-                                        ) => (
-                                            <li
-                                                key={idx}
-                                                className={buildClass(
-                                                    "mb-10 ml-10 md:ml-20",
-                                                    !expanded &&
-                                                        idx >=
-                                                            settings.experienceOffset
-                                                        ? "hidden"
-                                                        : ""
-                                                )}
-                                            >
-                                                <div className="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200 dark:border-gray-900 dark:bg-gray-700"></div>
-
-                                                <time className="mb-1 text-sm font-light leading-none text-zinc-600 dark:text-zinc-400">
-                                                    {formatDates(
-                                                        startDate,
-                                                        endDate
-                                                    )}
-                                                </time>
-
-                                                {role ? (
-                                                    <p className="font-base mb-1 text-base text-gray-500 dark:text-gray-400">
-                                                        {role}
-                                                    </p>
-                                                ) : null}
-
-                                                <div className="mb-1 flex flex-row items-center gap-3">
-                                                    <h3 className="text-xl font-semibold">
-                                                        {company}
-                                                    </h3>
-
-                                                    {link ? (
-                                                        <Link
-                                                            href={link}
-                                                            target="_blank"
-                                                        >
-                                                            <ExternalLink />
-                                                        </Link>
-                                                    ) : null}
-                                                </div>
-
-                                                {description ? (
-                                                    <p className="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
-                                                        {toPlainText(
-                                                            description
-                                                        )}
-                                                    </p>
-                                                ) : null}
-                                            </li>
-                                        )
-                                    )}
-                                </ol>
-                                <div
-                                    className={buildClass(
-                                        "cursor-pointer justify-center",
-                                        experience.length >=
-                                            settings.experienceOffset
-                                            ? "block"
-                                            : "hidden"
-                                    )}
-                                >
-                                    <button
-                                        type="button"
-                                        onClick={() => setExpanded(!expanded)}
-                                    >
-                                        {expanded ? <ArrowUp /> : <ArrowDown />}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </Layout>
             )}
         </>
