@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { toPlainText } from "@portabletext/react";
-import { buildClass, duplicateObj, formatDate, formatUrl } from "libs/utils";
+import { duplicateObj, formatDate } from "libs/utils";
 import Date from "./date";
 import SvgIcon, { defineProps } from "./icon";
-import { CV, Email, Github, LinkedIn, Location, Twitter } from "./icons";
 
 const formatDates = (startDate: string, endDate?: string): string => {
     return `${formatDate(startDate, "short")} - ${

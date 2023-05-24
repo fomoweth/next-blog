@@ -1,5 +1,3 @@
-import type { NextApiRequest } from "next";
-
 export function buildClass(...classNames: string[]): string {
     return classNames.join(" ");
 }
@@ -33,19 +31,9 @@ export function formatDate(
 }
 
 export function resolvePath(type?: string, slug?: string): string | undefined {
-    console.log("RESOLVE PATH");
-    console.log("TYPE:", type);
-    console.log("SLUG:", slug);
-
     switch (type) {
         case "post":
             return slug ? `/posts/${slug}` : "/posts";
-
-        case "project":
-            return "/projects";
-
-        case "tag":
-            return slug ? `/tags/${slug}` : "/tags";
 
         default:
             return undefined;

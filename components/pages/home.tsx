@@ -36,10 +36,9 @@ export default function Home({
     const [expanded, setExpanded] = useState<boolean>(false);
     const [toggle, setToggle] = useState<boolean>(false);
 
-    const { experience, location } = author;
-    const { iconLinks } = settings;
-
-    const { github, linkedin, twitter } = iconLinks;
+    const {
+        iconLinks: { github, linkedin, twitter },
+    } = settings;
 
     const cls = buildClass(
         "fill-primary-black dark:fill-white",
@@ -91,7 +90,7 @@ export default function Home({
                                     </span>
                                 </div>
 
-                                <p className="mt-1 font-light text-teal-500 md:ml-4 md:mt-3 md:text-xl">
+                                <p className="mt-1 font-light text-teal-500 md:ml-1 md:mt-3 md:text-xl">
                                     {toPlainText(settings.description)}
                                 </p>
 
@@ -175,7 +174,7 @@ export default function Home({
 
                         <div className="flex flex-col">
                             <h3 className="m-5 mb-0 text-center text-2xl font-normal md:pl-7 md:text-start md:text-3xl">
-                                Hacks
+                                Projects
                             </h3>
 
                             <div className="m-10 mt-6 md:mt-14">
