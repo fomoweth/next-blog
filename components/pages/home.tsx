@@ -226,7 +226,7 @@ export default function Home({
                                 <div
                                     className={buildClass(
                                         "cursor-pointer justify-center",
-                                        projects.length >=
+                                        projects.length >
                                             settings.projectsOffset
                                             ? "flex"
                                             : "hidden"
