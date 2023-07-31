@@ -76,7 +76,7 @@ export default function Home({
                     title={settings.metadata.title}
                 >
                     <section className="m-5 border-b border-zinc-200 pb-12 dark:border-zinc-700 md:border-none">
-                        <div className="flex flex-col-reverse items-center md:mt-10 md:grid md:grid-cols-6">
+                        <div className="flex flex-col-reverse items-center md:mt-5 md:grid md:grid-cols-6">
                             <div className="mx-auto justify-self-start md:col-span-5">
                                 <div className="mt-3 flex flex-col gap-2 md:flex-row md:gap-3 md:tracking-wide">
                                     <span className="text-3xl md:text-5xl">
@@ -90,14 +90,16 @@ export default function Home({
                                     </span>
                                 </div>
 
-                                <p className="mt-1 font-light text-teal-500 md:ml-1 md:mt-3 md:text-xl">
+                                <p className="mt-3 font-light text-teal-500 md:mt-3 md:text-xl">
                                     {toPlainText(settings.description)}
                                 </p>
 
                                 <div className="mt-3">
                                     <ul className="flex flex-row items-center justify-start text-xs">
                                         {icons.map(({ icon, url }, idx) => (
-                                            <li key={idx} className="p-3">
+
+
+                                            <li key={idx} className="p-3" style={idx == 0 ? {paddingLeft: "0 !important"} : {}}>
                                                 {url ? (
                                                     <Link
                                                         href={url}
@@ -117,6 +119,8 @@ export default function Home({
                                                 )}
                                             </li>
                                         ))}
+
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -158,7 +162,7 @@ export default function Home({
                                                     aria-hidden="true"
                                                     className="mt-4 flex items-center text-sm font-normal text-teal-500"
                                                 >
-                                                    Learn More
+                                                    Read More
                                                 </div>
                                             </Link>
                                         </article>
