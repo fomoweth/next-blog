@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import type { PageConfig } from "next/types";
 import { client as _client } from "libs/sanity.client";
 import getSecret from "libs/sanity.secret";
-import { resolvePath } from "libs/utils";
 import { previewSecretId, previewSecretIdRequired, token } from "env";
 
 export const config: PageConfig = { runtime: "nodejs" };
@@ -35,24 +34,7 @@ export default async function handler(
         return redirectToPreview(res, previewData, "/");
     }
 
-    console.log("PREVIEW DATA:", previewData);
-
-    const path = resolvePath(
-        req.query.type as string,
-        req.query.slug as string
-    );
-
-    console.log("PATH:", path);
-
-    if (!path) {
-        return res
-            .status(400)
-            .send(
-                "Failed to resolve preview path based on the given document type and slug"
-            );
-    }
-
-    redirectToPreview(res, previewData, path);
+    redirectToPreview(res, previewData, `/posts/${req.query.slug}`);
 }
 
 function redirectToPreview(
@@ -61,6 +43,6 @@ function redirectToPreview(
     path: string
 ): void {
     res.setPreviewData(previewData);
-    res.writeHead(307, { path });
+    res.writeHead(307, { Location: path });
     res.end();
 }

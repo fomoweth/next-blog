@@ -3,7 +3,7 @@ import CoverImage from "../cover-image";
 import Layout from "../layout";
 import PostContent from "../post-content";
 import Date from "../date";
-import { ArrowLeft, ArrowRight } from "components/icons";
+import { ArrowLeft, ArrowRight } from "../icons";
 import Tags from "../tags";
 
 interface Props {

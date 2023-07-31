@@ -36,10 +36,9 @@ export default function Home({
     const [expanded, setExpanded] = useState<boolean>(false);
     const [toggle, setToggle] = useState<boolean>(false);
 
-    const { experience, location } = author;
-    const { iconLinks } = settings;
-
-    const { github, linkedin, twitter } = iconLinks;
+    const {
+        iconLinks: { github, linkedin, twitter },
+    } = settings;
 
     const cls = buildClass(
         "fill-primary-black dark:fill-white",
@@ -231,7 +230,7 @@ export default function Home({
                                 <div
                                     className={buildClass(
                                         "cursor-pointer justify-center",
-                                        projects.length >=
+                                        projects.length >
                                             settings.projectsOffset
                                             ? "flex"
                                             : "hidden"

@@ -3,7 +3,6 @@ import { toPlainText } from "@portabletext/react";
 import Alert from "./alert";
 import Footer from "./footer";
 import NavBar from "./navbar";
-import Separator from "./separator";
 
 interface Props {
     children: React.ReactNode;
@@ -59,7 +58,7 @@ export default function Layout({
                                     </h1>
                                 </div>
 
-                                <Separator />
+                                <hr className="my-2 border-zinc-200 dark:border-zinc-700" />
                             </>
                         ) : null}
 
