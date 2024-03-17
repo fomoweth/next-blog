@@ -12,6 +12,8 @@ export const settingsQuery = groq`*[_type == "settings"][1] {
 }`;
 
 export const authorQuery = groq`*[_type == "author"][0] {
+	name,
+	position,
 	location,
 	experience[] | order(startDate, desc) {
 		company,
@@ -59,10 +61,11 @@ export const postsQuery = groq`
 `;
 
 export const projectsQuery = groq`
-	*[_type == "project" && !(_id in path("drafts.**")) && hidden == false] | order(date desc) {
+	*[_type == "project" && !(_id in path("drafts.**")) && hidden == false] | order(startDate desc) {
 		title,
 		"slug": slug.current,
-		date,
+		startDate,
+		endDate,
 		link,
 		description[],
 		keyPoints[],

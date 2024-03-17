@@ -1,14 +1,8 @@
 import Link from "next/link";
 import { toPlainText } from "@portabletext/react";
-import { duplicateObj, formatDate } from "libs/utils";
+import { duplicateObj, formatDates } from "libs/utils";
 import Date from "./date";
-import SvgIcon, { defineProps } from "./icon";
-
-const formatDates = (startDate: string, endDate?: string): string => {
-    return `${formatDate(startDate, "short")} - ${
-        endDate ? formatDate(endDate, "short") : "Present"
-    }`;
-};
+import SvgIcon, { defineIconProps } from "./icon";
 
 interface Props {
     author: Author;
@@ -42,102 +36,78 @@ export default function Resume({ author, projects, settings }: Props) {
         { workProjects: [], personalProjects: [] }
     );
 
-    const [locationIcon, emailIcon, blogIcon] = defineProps(
+    const [
+        locationIcon,
+        emailIcon,
+        blogIcon,
+        githubIcon,
+        linkedinIcon,
+        twitterIcon,
+    ] = defineIconProps(
         duplicateObj({ location: author.location, ...settings.iconLinks }, [
             "location",
             "email",
             "blog",
+            "github",
+            "linkedin",
+            "twitter",
         ]),
         true
     );
 
-    const [linkedinIcon, twitterIcon, githubIcon] = defineProps(
-        duplicateObj(settings.iconLinks, ["linkedin", "twitter", "github"]),
-        true
-    );
-
     const icons = [
-        emailIcon,
         blogIcon,
+        githubIcon,
         linkedinIcon,
         twitterIcon,
-        githubIcon,
+        emailIcon,
     ].map((icon) => ({ ...icon, useText: false }));
 
     return (
         <div className="z-20 min-h-screen w-full">
-            <div
-                id="p1"
-                className="container mx-auto my-5 border border-gray-200 p-10 dark:border-gray-700 md:my-20 md:max-h-[1064px] md:max-w-screen-md"
-            >
+            <div className="mx-auto my-5 border border-gray-400 p-10 dark:border-gray-700 md:my-20 md:max-h-full md:max-w-screen-md">
                 <div className="flex flex-col md:px-10">
                     <header className="my-5 flex flex-col">
-                        <div className="flex flex-col text-center md:flex-row md:items-center md:gap-3">
-                            <h1 className="mb-3 text-3xl md:mb-0">Ryan Kim</h1>
-                            <h1 className="text-xl text-slate-400/90 md:text-2xl">
-                                Smart Contract Engineer
-                            </h1>
+                        <div className="flex flex-col items-center text-center md:mb-0 md:flex-row md:items-stretch md:justify-between md:text-start">
+                            <div className="flex flex-col md:justify-between">
+                                <h1 className="m-2 text-3xl md:ml-0">
+                                    {author.name}
+                                </h1>
+
+                                <h1 className="m-2 text-xl text-gray-700 dark:text-slate-300/90 md:ml-0 md:text-2xl">
+                                    {author.position}
+                                </h1>
+                            </div>
+
+                            <div className="flex flex-col items-center md:flex-col-reverse md:items-end md:justify-between">
+                                <div className="m-3">
+                                    <SvgIcon
+                                        fill="fill-teal-500"
+                                        {...locationIcon}
+                                    />
+                                </div>
+
+                                <ul className="flex flex-row text-xs">
+                                    {icons.map((icon, idx) => (
+                                        <li key={idx} className="p-3">
+                                            <Link
+                                                href={icon.url!}
+                                                target="_blank"
+                                            >
+                                                <SvgIcon {...icon} />
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
-                        <div className="mx-10 flex flex-col font-light md:mx-0 md:flex-row">
-                            <SvgIcon fill="fill-teal-500" {...locationIcon} />
-
-                            <Link
-                                className="hidden hover:text-teal-500 hover:underline dark:hover:text-teal-500/95 md:block"
-                                href={emailIcon.url!}
-                                target="_blank"
-                            >
-                                <SvgIcon {...emailIcon} />
-                            </Link>
-                        </div>
-                        <div className="hidden font-light md:flex md:flex-row">
-                            <Link
-                                className="hidden hover:text-teal-500 hover:underline dark:hover:text-teal-500/95 md:block"
-                                href={blogIcon.url!}
-                                target="_blank"
-                            >
-                                <SvgIcon {...blogIcon} />
-                            </Link>
-
-                            <Link
-                                className="hidden hover:text-teal-500 hover:underline dark:hover:text-teal-500/95 md:block"
-                                href={linkedinIcon.url!}
-                                target="_blank"
-                            >
-                                <SvgIcon {...linkedinIcon} />
-                            </Link>
-
-                            <Link
-                                className="hidden hover:text-teal-500 hover:underline dark:hover:text-teal-500/95 md:block"
-                                href={twitterIcon.url!}
-                                target="_blank"
-                            >
-                                <SvgIcon {...twitterIcon} />
-                            </Link>
-
-                            <Link
-                                className="hidden hover:text-teal-500 hover:underline dark:hover:text-teal-500/95 md:block"
-                                href={githubIcon.url!}
-                                target="_blank"
-                            >
-                                <SvgIcon {...githubIcon} />
-                            </Link>
-                        </div>
-                        <ul className="flex flex-row items-center justify-start text-xs md:hidden">
-                            {icons.map((icon, idx) => (
-                                <li key={idx} className="p-3">
-                                    <Link href={icon.url!} target="_blank">
-                                        <SvgIcon {...icon} />
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
                     </header>
 
-                    <hr className="mb-2 mt-1 w-full border-[#333]" />
+                    <hr className="mb-7 w-full border-[#333]" />
 
-                    <section className="mt-2 md:text-start">
+                    <section className="md:text-start">
                         <div className="flex flex-col">
-                            <h3 className="border-b border-[#333] pb-5 text-center text-xl font-semibold uppercase md:text-start">
+                            <h3 className="mb-3 text-center text-2xl font-semibold uppercase md:mb-0 md:text-start">
                                 Professional Experience
                             </h3>
 
@@ -145,6 +115,7 @@ export default function Resume({ author, projects, settings }: Props) {
                                 (
                                     {
                                         company,
+                                        description,
                                         role,
                                         link,
                                         startDate,
@@ -153,13 +124,10 @@ export default function Resume({ author, projects, settings }: Props) {
                                     },
                                     idx
                                 ) => (
-                                    <div
-                                        key={idx}
-                                        className="my-4 flex flex-col"
-                                    >
-                                        <div className="flex flex-col-reverse items-center justify-between gap-2 md:flex-row">
+                                    <div className="my-3 flex flex-col">
+                                        <div className="mt-3 flex flex-col-reverse items-center justify-between gap-2 md:flex-row">
                                             <div className="flex flex-row items-center gap-3">
-                                                <h5 className="text-lg font-medium uppercase">
+                                                <h5 className="text-lg font-medium text-zinc-800 dark:text-zinc-200">
                                                     {company}
                                                 </h5>
                                                 {link ? (
@@ -181,24 +149,30 @@ export default function Resume({ author, projects, settings }: Props) {
                                                     </Link>
                                                 ) : null}
                                             </div>
-                                            <time className="text-sm font-light text-zinc-600 dark:text-zinc-400">
+
+                                            <time className="text-sm font-light text-zinc-500">
                                                 {formatDates(
                                                     startDate,
                                                     endDate
                                                 )}
                                             </time>
                                         </div>
-                                        <h5 className="my-1 text-center text-xs font-normal uppercase text-zinc-600 dark:text-zinc-400 md:ml-1 md:text-start md:text-sm">
+
+                                        <span className="m-2 text-center text-sm font-light text-gray-800 dark:text-gray-300/90 md:ml-1 md:text-start">
+                                            {toPlainText(description)}
+                                        </span>
+
+                                        <h5 className="mt-1 text-center text-base font-medium text-zinc-900 dark:text-zinc-200 md:ml-0 md:text-start md:text-sm">
                                             {role}
                                         </h5>
 
-                                        <ul className="list-disc md:list-inside">
+                                        <ul className="ml-2 list-disc md:ml-1 md:list-inside">
                                             {keyPoints.map((keyPoint, idx) => (
                                                 <li
                                                     key={idx}
-                                                    className="mt-1 text-sm text-teal-500"
+                                                    className="m-3 text-sm text-teal-500 md:ml-0"
                                                 >
-                                                    <span className="text-gray-500 dark:text-gray-300">
+                                                    <span className="text-gray-700 dark:text-gray-400">
                                                         {keyPoint}
                                                     </span>
                                                 </li>
@@ -210,28 +184,27 @@ export default function Resume({ author, projects, settings }: Props) {
                         </div>
                     </section>
 
-                    <section className="mt-1 md:text-start">
+                    <section className="md:text-start">
                         <div className="flex flex-col">
                             {workProjects.map(
                                 (
                                     {
                                         title,
-                                        date,
+                                        startDate,
+                                        endDate,
                                         link,
                                         description,
                                         keyPoints,
                                     },
                                     idx
                                 ) => (
-                                    <div
-                                        key={idx}
-                                        className="mb-4 flex flex-col"
-                                    >
+                                    <div className="mb-5 mt-2 flex flex-col">
                                         <div className="flex flex-col-reverse items-center justify-between gap-2 md:flex-row">
-                                            <div className="flex flex-row items-center gap-3 text-center">
-                                                <h5 className="text-lg font-medium uppercase">
+                                            <div className="flex flex-row items-center gap-3">
+                                                <h5 className="text-lg font-medium text-zinc-800 dark:text-zinc-200">
                                                     {title}
                                                 </h5>
+
                                                 {link ? (
                                                     <Link
                                                         className="pb-1"
@@ -252,10 +225,22 @@ export default function Resume({ author, projects, settings }: Props) {
                                                 ) : null}
                                             </div>
 
-                                            <Date date={date} month="short" />
+                                            {endDate ? (
+                                                <time className="text-sm font-light text-zinc-500">
+                                                    {formatDates(
+                                                        startDate,
+                                                        endDate
+                                                    )}
+                                                </time>
+                                            ) : (
+                                                <Date
+                                                    date={startDate}
+                                                    month="long"
+                                                />
+                                            )}
                                         </div>
 
-                                        <p className="my-2 ml-1 text-sm font-light text-gray-500 dark:text-gray-400">
+                                        <p className="m-2 text-center text-sm font-light text-gray-800 dark:text-zinc-300/90 md:ml-1 md:text-start">
                                             {toPlainText(description)}
                                         </p>
 
@@ -263,9 +248,9 @@ export default function Resume({ author, projects, settings }: Props) {
                                             {keyPoints.map((keyPoint, idx) => (
                                                 <li
                                                     key={idx}
-                                                    className="mt-1 text-sm text-teal-500"
+                                                    className="m-3 text-sm text-teal-500 md:ml-0"
                                                 >
-                                                    <span className="text-gray-500 dark:text-gray-300">
+                                                    <span className="text-gray-700 dark:text-gray-400">
                                                         {keyPoint}
                                                     </span>
                                                 </li>
@@ -276,21 +261,12 @@ export default function Resume({ author, projects, settings }: Props) {
                             )}
                         </div>
                     </section>
-                </div>
-            </div>
 
-            <div
-                id="p2"
-                className="container mx-auto my-5 border border-gray-200 px-10 pb-10 dark:border-gray-700 md:my-20 md:max-h-[1064px] md:max-w-screen-md"
-            >
-                <div className="flex flex-col px-5">
-                    <header className="my-5 flex flex-col items-center"></header>
+                    <hr className="mb-7 w-full border-[#333]" />
 
-                    <hr className="mb-2 mt-1 w-full border-[#333]" />
-
-                    <section className="mt-2 md:text-start">
+                    <section className="md:text-start">
                         <div className="flex flex-col">
-                            <h3 className="mb-4 border-b border-[#333] pb-5 text-center text-xl font-semibold uppercase md:text-start">
+                            <h3 className="mb-5 text-center text-2xl font-semibold uppercase md:text-start">
                                 Technical Projects
                             </h3>
 
@@ -298,22 +274,21 @@ export default function Resume({ author, projects, settings }: Props) {
                                 (
                                     {
                                         title,
-                                        date,
+                                        startDate,
+                                        endDate,
                                         link,
                                         description,
                                         keyPoints,
                                     },
                                     idx
                                 ) => (
-                                    <div
-                                        key={idx}
-                                        className="mb-4 flex flex-col"
-                                    >
+                                    <div className="mb-5 mt-2 flex flex-col">
                                         <div className="flex flex-col-reverse items-center justify-between gap-2 md:flex-row">
                                             <div className="flex flex-row items-center gap-3">
-                                                <h5 className="text-lg font-medium uppercase">
+                                                <h5 className="text-lg font-medium text-zinc-800 dark:text-zinc-200">
                                                     {title}
                                                 </h5>
+
                                                 {link ? (
                                                     <Link
                                                         className="pb-1"
@@ -333,10 +308,23 @@ export default function Resume({ author, projects, settings }: Props) {
                                                     </Link>
                                                 ) : null}
                                             </div>
-                                            <Date date={date} month="short" />
+
+                                            {endDate ? (
+                                                <time className="text-sm font-light text-zinc-500">
+                                                    {formatDates(
+                                                        startDate,
+                                                        endDate
+                                                    )}
+                                                </time>
+                                            ) : (
+                                                <Date
+                                                    date={startDate}
+                                                    month="long"
+                                                />
+                                            )}
                                         </div>
 
-                                        <p className="my-2 ml-1 text-sm font-light text-gray-500 dark:text-gray-400">
+                                        <p className="m-2 text-center text-sm font-light text-gray-800 dark:text-zinc-300/90 md:ml-1 md:text-start">
                                             {toPlainText(description)}
                                         </p>
 
@@ -344,9 +332,9 @@ export default function Resume({ author, projects, settings }: Props) {
                                             {keyPoints.map((keyPoint, idx) => (
                                                 <li
                                                     key={idx}
-                                                    className="mt-1 text-sm text-teal-500"
+                                                    className="m-3 text-sm text-teal-500 md:ml-0"
                                                 >
-                                                    <span className="text-gray-500 dark:text-gray-300">
+                                                    <span className="text-gray-700 dark:text-gray-400">
                                                         {keyPoint}
                                                     </span>
                                                 </li>
@@ -358,11 +346,11 @@ export default function Resume({ author, projects, settings }: Props) {
                         </div>
                     </section>
 
-                    <hr className="mb-2 mt-5 w-full border-[#333]" />
+                    <hr className="mb-7 w-full border-[#333]" />
 
-                    <section className="mt-2">
-                        <div className="flex flex-col text-center text-sm">
-                            <h3 className="mb-4 border-b border-[#333] pb-5 text-center text-xl font-semibold uppercase md:text-start">
+                    <section className="md:text-start">
+                        <div className="mb-5 mt-2 flex flex-col">
+                            <h3 className="mb-5 text-center text-2xl font-semibold uppercase md:text-start">
                                 Key Skills
                             </h3>
 
@@ -374,10 +362,10 @@ export default function Resume({ author, projects, settings }: Props) {
                                     >
                                         <span className="flex flex-row gap-2">
                                             <span className="text-teal-500">{`>>`}</span>
-                                            <span className="hidden md:block">
+                                            <span className="hidden text-gray-900 dark:text-zinc-300/90 md:block">
                                                 {skillType}:
                                             </span>
-                                            <span>
+                                            <span className="text-gray-700 dark:text-gray-400">
                                                 {author.skills
                                                     .filter(
                                                         ({ type }) =>
@@ -392,6 +380,8 @@ export default function Resume({ author, projects, settings }: Props) {
                             </div>
                         </div>
                     </section>
+
+                    <hr className="mb-7 w-full border-[#333]" />
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ interface Props {
     name: string;
     path: string;
     text: string;
+    url?: string;
     useText?: boolean;
     width?: string;
     height?: string;
@@ -26,7 +27,7 @@ export default function SvgIcon({
     return (
         <div
             className={buildClass(
-                !!useText ? "m-4 flex flex-row items-center gap-3" : "",
+                !!useText ? "flex max-w-max gap-2" : "",
                 name !== "location" ? "hover:underline" : ""
             )}
         >
@@ -51,7 +52,7 @@ export default function SvgIcon({
     );
 }
 
-export function defineProps(
+export function defineIconProps(
     params: { [key: string]: string | undefined },
     useText: boolean = false
 ) {

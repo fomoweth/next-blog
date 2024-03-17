@@ -18,6 +18,8 @@ interface Settings {
 }
 
 interface Author {
+    name: string;
+    position: string;
     location: string;
     experience: Experience[];
     skills: {
@@ -49,11 +51,13 @@ interface Post {
 interface Project {
     title: string;
     slug: string;
-    date: string;
-    link: string;
+    startDate: string;
+    endDate?: string;
+    link?: string;
     description: Block[];
     keyPoints: string[];
     isPersonal: boolean;
+    onResume: boolean;
 }
 
 interface Slug {

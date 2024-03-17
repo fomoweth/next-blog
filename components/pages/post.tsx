@@ -2,7 +2,6 @@ import Link from "next/link";
 import CoverImage from "../cover-image";
 import Layout from "../layout";
 import PostContent from "../post-content";
-import Date from "../date";
 import { ArrowLeft, ArrowRight } from "../icons";
 import Tags from "../tags";
 
@@ -30,17 +29,11 @@ export default function Post({
             preview={preview}
             settings={settings}
             title={post.title}
+            date={post.date}
         >
             <article className="m-5">
                 <div className="flex flex-col">
-                    <div className="flex flex-col gap-6 md:ml-6 md:flex-row md:flex-wrap md:items-center">
-                        <Date
-                            date={post.date}
-                            month="long"
-                            day
-                            fontSize="base"
-                        />
-
+                    <div className="mt-3 flex flex-col items-center gap-6 md:ml-6 md:flex-row md:flex-wrap">
                         <Tags tags={post.tags} />
                     </div>
 

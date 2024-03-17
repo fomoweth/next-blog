@@ -23,6 +23,13 @@ export default defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
+            name: "position",
+            title: "Position",
+            type: "string",
+            initialValue: "Smart Contract Engineer",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
             name: "slug",
             title: "Slug",
             type: "slug",

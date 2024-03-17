@@ -12,7 +12,7 @@ export default function Date({ date, month, day, fontSize = "sm" }: Props) {
 
     return (
         <time
-            className={`text-${fontSize} font-light text-zinc-600 dark:text-zinc-400`}
+            className={`text-${fontSize} font-light text-zinc-500`}
             dateTime={formatted}
         >
             {formatted}

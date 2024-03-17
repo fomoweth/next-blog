@@ -27,10 +27,15 @@ export default defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
-            name: "date",
-            title: "Date",
+            name: "startDate",
+            title: "Start Date",
             type: "date",
             validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "endDate",
+            title: "End Date",
+            type: "date",
         }),
         defineField({
             name: "link",
@@ -62,6 +67,13 @@ export default defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
+            name: "onResume",
+            title: "Display on Resume",
+            type: "boolean",
+            initialValue: true,
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
             name: "hidden",
             title: "Hidden",
             type: "boolean",
@@ -72,13 +84,13 @@ export default defineType({
     preview: {
         select: {
             title: "title",
-            date: "date",
+            startDate: "startDate",
         },
         prepare(selection) {
-            const { title, date } = selection;
+            const { title, startDate } = selection;
             return {
                 title,
-                subtitle: formatDate(date, "short", true),
+                subtitle: formatDate(startDate, "short", true),
             };
         },
     },

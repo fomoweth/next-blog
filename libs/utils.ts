@@ -30,6 +30,12 @@ export function formatDate(
     });
 }
 
+export function formatDates(startDate: string, endDate?: string): string {
+    return `${formatDate(startDate, "short")} - ${
+        endDate ? formatDate(endDate, "short") : "Present"
+    }`;
+}
+
 export function resolvePath(type?: string, slug?: string): string | undefined {
     switch (type) {
         case "post":

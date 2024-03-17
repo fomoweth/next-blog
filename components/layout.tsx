@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { toPlainText } from "@portabletext/react";
 import Alert from "./alert";
+import Date from "./date";
 import Footer from "./footer";
 import NavBar from "./navbar";
 
@@ -12,6 +13,7 @@ interface Props {
     preview?: boolean;
     settings: Settings;
     title?: string;
+    date?: string;
 }
 
 export default function Layout({
@@ -22,6 +24,7 @@ export default function Layout({
     preview,
     settings,
     title,
+    date,
 }: Props) {
     return (
         <>
@@ -53,9 +56,20 @@ export default function Layout({
                         {title ? (
                             <>
                                 <div className="my-8 mb-6 md:mt-14">
-                                    <h1 className="text-center text-4xl font-semibold md:ml-10 md:text-start md:text-6xl">
-                                        {title}
-                                    </h1>
+                                    <div className="flex flex-col items-center justify-between text-center md:mx-10 md:flex-row">
+                                        <h5 className="mb-3 text-center text-4xl font-semibold md:mb-0 md:text-start md:text-6xl">
+                                            {title}
+                                        </h5>
+
+                                        {date ? (
+                                            <Date
+                                                date={date}
+                                                month="long"
+                                                day
+                                                fontSize="base"
+                                            />
+                                        ) : null}
+                                    </div>
                                 </div>
 
                                 <hr className="my-2 border-zinc-200 dark:border-zinc-700" />

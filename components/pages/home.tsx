@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { toPlainText } from "@portabletext/react";
-import { buildClass } from "libs/utils";
+import { buildClass, formatDates } from "libs/utils";
 import Button from "../button";
 import Date from "../date";
 import {
     ArrowDown,
     ArrowUp,
     CV,
+    Email,
     ExternalLink,
     Github,
     LinkedIn,
@@ -37,7 +38,7 @@ export default function Home({
     const [toggle, setToggle] = useState<boolean>(false);
 
     const {
-        iconLinks: { github, linkedin, twitter },
+        iconLinks: { email, github, linkedin, twitter },
     } = settings;
 
     const cls = buildClass(
@@ -50,6 +51,7 @@ export default function Home({
         { url: github, icon: Github({ cls }) },
         { url: linkedin, icon: LinkedIn({ cls }) },
         { url: twitter, icon: Twitter({ cls }) },
+        { url: email, icon: Email({ cls }) },
     ];
 
     return (
@@ -80,13 +82,13 @@ export default function Home({
                             <div className="mx-auto justify-self-start md:col-span-5">
                                 <div className="mt-3 flex flex-col gap-2 md:flex-row md:gap-3 md:tracking-wide">
                                     <span className="text-3xl md:text-5xl">
-                                        Ryan Kim
+                                        {author.name}
                                     </span>
                                     <span className="hidden md:block md:text-5xl">
                                         |
                                     </span>
                                     <span className="text-xl md:text-5xl">
-                                        Smart Contract Engineer
+                                        {author.position}
                                     </span>
                                 </div>
 
@@ -97,9 +99,18 @@ export default function Home({
                                 <div className="mt-3">
                                     <ul className="flex flex-row items-center justify-start text-xs">
                                         {icons.map(({ icon, url }, idx) => (
-
-
-                                            <li key={idx} className="p-3" style={idx == 0 ? {paddingLeft: "0 !important"} : {}}>
+                                            <li
+                                                key={idx}
+                                                className="p-3"
+                                                style={
+                                                    idx == 0
+                                                        ? {
+                                                              paddingLeft:
+                                                                  "0 !important",
+                                                          }
+                                                        : {}
+                                                }
+                                            >
                                                 {url ? (
                                                     <Link
                                                         href={url}
@@ -119,8 +130,6 @@ export default function Home({
                                                 )}
                                             </li>
                                         ))}
-
-                                        
                                     </ul>
                                 </div>
                             </div>
@@ -198,7 +207,7 @@ export default function Home({
                                             <div className="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200 dark:border-gray-900 dark:bg-gray-700"></div>
 
                                             <Date
-                                                date={project.date}
+                                                date={project.startDate}
                                                 month="long"
                                             />
 
