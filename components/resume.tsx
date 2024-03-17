@@ -124,7 +124,10 @@ export default function Resume({ author, projects, settings }: Props) {
                                     },
                                     idx
                                 ) => (
-                                    <div className="my-3 flex flex-col">
+                                    <div
+                                        key={idx}
+                                        className="my-3 flex flex-col"
+                                    >
                                         <div className="mt-3 flex flex-col-reverse items-center justify-between gap-2 md:flex-row">
                                             <div className="flex flex-row items-center gap-3">
                                                 <h5 className="text-lg font-medium text-zinc-800 dark:text-zinc-200">
@@ -198,7 +201,10 @@ export default function Resume({ author, projects, settings }: Props) {
                                     },
                                     idx
                                 ) => (
-                                    <div className="mb-5 mt-2 flex flex-col">
+                                    <div
+                                        key={idx}
+                                        className="mb-5 mt-2 flex flex-col"
+                                    >
                                         <div className="flex flex-col-reverse items-center justify-between gap-2 md:flex-row">
                                             <div className="flex flex-row items-center gap-3">
                                                 <h5 className="text-lg font-medium text-zinc-800 dark:text-zinc-200">
@@ -282,7 +288,10 @@ export default function Resume({ author, projects, settings }: Props) {
                                     },
                                     idx
                                 ) => (
-                                    <div className="mb-5 mt-2 flex flex-col">
+                                    <div
+                                        key={idx}
+                                        className="mb-5 mt-2 flex flex-col"
+                                    >
                                         <div className="flex flex-col-reverse items-center justify-between gap-2 md:flex-row">
                                             <div className="flex flex-row items-center gap-3">
                                                 <h5 className="text-lg font-medium text-zinc-800 dark:text-zinc-200">
